@@ -1,0 +1,205 @@
+function [] = PlotterComparison(InputStruct)
+%Generic function for plotting two inference schemes (EpiEstim and
+%Simulation-Approach) but with a variety of different settings for the
+%plots. All analysis is done prior to using this function, and is soley
+%used for analysis visualisation. The broad-scale settings are:
+
+%Probability Density: for if you want to view the continuous serial
+%interval prior to discretisation
+%IncidenceAndTrueR: for plotting incidence and (if you have access to it)
+%the 'true' Rt values to plot on a dual axes plot.
+%ComparisonsOriginal: Now defunct
+%Comparisons
+
+
+
+I_data = InputStruct.I_data; InferenceStruct1 = InputStruct.SimulationOutputStruct;
+InferenceStruct2 = InputStruct.EEInferenceOutput; R = InputStruct.R_True; SerialPara = InputStruct.SerialParameters;
+w_Simulation = InputStruct.w_Sim; w_EpiEstim = InputStruct.w_EE; N_Sim = InputStruct.N_Sim; YLim = InputStruct.RYLims; 
+ComparisonsOriginal = InputStruct.ComparisonsOriginal; IncidenceAndTrueR = InputStruct.IncidenceAndTrueR; 
+ProbabilityDensity = InputStruct.ProbabilityDensity; ComparisonsNew = InputStruct.ComparisonsNew;
+
+ColourMat = [0 0.4470 0.7410; 0.8500 0.3250 0.0980; 0.9290 0.6940 0.1250];
+
+C  = [0.3686 0.3098 0.6353; 0.2005 0.5593 0.7380; 0.4558 0.7897 0.6458;...
+    0.8525 0.2654 0.3082; 0.6196 0.0039 0.2588];
+
+CIs1 = InferenceStruct1.CIs; Means1 = InferenceStruct1.Means;
+CIs2 = InferenceStruct2.CIs; Means2 = InferenceStruct2.Means;
+
+daysflipCI1 = [1:size(CIs1, 2), size(CIs1, 2):-1:1];
+inBetweenCI1 = [CIs1(2, :), fliplr(CIs1(1, :))];
+
+daysflipCI2 = [1:size(CIs2, 2), size(CIs2, 2):-1:1];
+inBetweenCI2 = [CIs2(2, :), fliplr(CIs2(1, :))];
+
+SerialTimeDays = length(w_EpiEstim);
+SimDomain = 1/N_Sim:1/N_Sim:SerialTimeDays-1/N_Sim;
+
+lengthI = length(I_data);
+length1 = length(Means1);
+length2 = length(Means2);
+lengthR = length(R);
+
+InferenceStruct2.Name = 'Cori ($P=1$)';
+
+if isequal(ProbabilityDensity, 'On')
+    
+    x = linspace(0, SerialTimeDays, 100);
+    
+    plot(x, gampdf(x, SerialPara(1), SerialPara(2)))
+    xlabel('Serial interval (weeks)')
+    ylabel('Probability density')
+    
+end
+
+if isequal(IncidenceAndTrueR, 'On')
+    
+    
+    bar(I_data, 'FaceColor', ColourMat(1, :), 'BarWidth', 1)
+    ylabel('Incidence')
+    
+    if ~isempty(R)
+        
+        yyaxis left
+        
+        bar(I_data, 'FaceColor', ColourMat(1, :), 'BarWidth', 1)
+        ylabel('Incidence')
+        hold on
+        
+        yyaxis right
+        
+%         h(1) = plot(lengthI-lengthR+1:lengthI, R, 'k-');
+        h(1) = line([0 6.5], [R(1) R(1)], 'Color', 'k');
+        line([6.5 11.5], [R(end) R(end)], 'Color', 'k')
+        line([6.5 6.5], [R(1) R(end)], 'Color', 'k')
+        labely = ylabel('$R_t$', 'interpreter', 'latex');
+
+        ax = gca;
+        ax.YAxis(1).Color = ColourMat(1, :);
+        ax.YAxis(2).Color = 'k';
+        
+        legend(h(1), 'True $R_t$', 'interpreter', 'latex')
+        ylim([YLim(1) YLim(2)])
+        
+    end
+    
+    xlabel('Time ($t$ weeks)', 'interpreter', 'latex')
+    xlim([0.5 lengthI+0.5])
+    
+end
+
+if isequal(ComparisonsOriginal, 'On')
+    
+    
+    
+    yyaxis left
+    
+    h(1) = bar(I_data, 'FaceColor', [.5 .5 .5]);
+    
+    ylim([0 1.1*max(I_data)])
+    
+    ylabel('Incidence')
+    xlabel('Time ($t$ weeks)', 'interpreter', 'latex')
+    
+    yyaxis right
+    
+    
+    
+    h(2) = plot(lengthI-length1+1:lengthI, Means1, 'red', 'LineWidth', 2);
+    hold on
+    h(3) = fill(daysflipCI1 + lengthI - length1, inBetweenCI1, 'red' , 'LineWidth', 0.1, ...
+        'edgecolor', [1 1 1]);
+    set(h(3),'facealpha',.5)
+    
+    h(4) = plot(lengthI-length2+1:lengthI, Means2, 'blue', 'LineWidth', 2);
+    h(5) = fill(daysflipCI2 + lengthI - length1, inBetweenCI2, 'blue' , 'LineWidth', 0.1, ...
+        'edgecolor', [1 1 1]);
+    set(h(5),'facealpha',.5)
+    
+    if ~isempty(R)
+        
+        h(6) = plot(lengthI-lengthR+1:lengthI, R, 'k-');
+        
+        legend(h([1 2 3 4 5 6]), 'Incidence', strcat(InferenceStruct1.Name, ' Mean'), strcat(InferenceStruct1.Name, 'CI'), ...
+            strcat(InferenceStruct2.Name, ' Mean'), strcat(InferenceStruct2.Name, 'CI'), 'True $R_t$')
+        
+        
+    else
+        
+        
+        h(6) = yline(1, 'k--');
+        
+        legend(h([1 2 3 4 5 6]), 'Incidence', strcat(InferenceStruct1.Name, ' Mean'), strcat(InferenceStruct1.Name, 'CI'), ...
+            strcat(InferenceStruct2.Name, ' Mean'), strcat(InferenceStruct2.Name, 'CI'), '$R_t = 1$')
+        
+        
+    end
+    
+    ylabel('$R_t$', 'interpreter', 'latex')
+    
+    x = linspace(0, SerialTimeDays-1/N_Sim, 100);
+    yyaxis left
+    
+    h(1) = plot(x, gampdf(x, SerialPara(1), SerialPara(2)), 'k');
+    ylabel('SI pdf')
+    hold on
+    yyaxis right
+    
+    h(2) = plot(0:length(w_EpiEstim)-1, w_EpiEstim, 'b');
+    hold on
+    
+    
+    h(3) = plot([0 SimDomain], [0 w_Simulation], 'r--');
+    legend(h([1 2 3]), 'Continuous Serial', 'EpiEstim serial', 'Simulation serial')
+    
+    xlabel('Days');
+    ylabel('$w$')
+    
+    title("Serial interval comparison with $N=$ " + num2str(N_Sim))
+    
+end
+
+if isequal(ComparisonsNew, 'On')
+    
+    if ~isempty(R)
+        
+       h(3) = line([0 6.5], [R(1) R(1)], 'Color', 'k');
+       hold on
+       line([6.5 11.5], [R(end) R(end)], 'Color', 'k')
+       line([6.5 6.5], [R(1) R(end)], 'Color', 'k')
+       labely = ylabel('$R_t$', 'interpreter', 'latex');
+       
+    end
+    
+    hold on
+    
+    g2 = fill(daysflipCI2 + lengthI - length1, inBetweenCI2, ColourMat(1, :) , 'LineWidth', 0.1, ...
+        'edgecolor', [1 1 1]);
+    set(g2,'facealpha',.5)
+    g2.EdgeColor = 'none';
+    
+    g4 = fill(daysflipCI1 + lengthI - length1, inBetweenCI1, ColourMat(2, :) , 'LineWidth', 0.1, ...
+        'edgecolor', [1 1 1]);
+    set(g4,'facealpha',.5)
+    g4.EdgeColor = 'none';
+    
+    h(1) = plot(lengthI-length2+1:lengthI, Means2, 'color', ColourMat(1, :), 'LineWidth', 2);
+    h(2) = plot(lengthI-length1+1:lengthI, Means1, 'color', ColourMat(2, :), 'LineWidth', 2);
+    
+    if isempty(R)
+       
+         legend(h([1 2]), strcat(InferenceStruct2.Name), "$P=$ "+num2str(N_Sim), 'interpreter', 'latex', 'Location', 'best');
+        
+    else
+        
+         legend(h([1 2 3]), strcat(InferenceStruct2.Name), "$P=$ "+num2str(N_Sim), 'True $R_t$', 'interpreter', 'latex', 'Location', 'best');
+        
+    end
+    
+    ylabel('$\hat{R}_t$', 'interpreter', 'latex')
+    xlabel('Time ($t$ weeks)', 'interpreter', 'latex')
+    
+    xlim([0.5 lengthI + 0.5])
+    
+end

@@ -1,0 +1,8 @@
+This file cotains a description of all the .mat files contained in this folder.
+All of these files are implemented by the scripts in the 'Scripts' folder.
+
+All the files named "LatestMeansResults... .mat" contain the relevant information for the Rt inference for the stated values of P. As the user can see, the seed is always set to 1 (inference may vary very slightly between simulations if a seed is not set).
+
+The file named "LargeSyntheticExperimentalFinal" simply conglomerates all of the aforementioned files into one, and only includes the fields that are necessary in generating Figure S2.
+
+The files beginning "Wales... .mat" contain the inference results for the real-world data sets. The files with "BigCalc" in them represent choosing P = 168, whereas the ones without represent teh resulst for smaller values of P.
