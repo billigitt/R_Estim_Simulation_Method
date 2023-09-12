@@ -13,8 +13,8 @@ f_U = @(u, kOverN) (N - N^2*(abs(u-kOverN)))/N;
 
 %We must start at  -1 so that the w0 value can be calculated (this is
 %included in the original documentation by Cori & Ferguson). The +1s 
-%are i) accounting for the fact we start need integral limits for -1 and
-%for SerialTimeDays + 1, so we have 3 extra points and ii) to make the 
+%are (i) accounting for the fact we start needing integral limits for -1 and
+%for SerialTimeDays + 1, so we have 3 extra points and (ii) to make the 
 %numbers nice in the linspace.
 x = linspace(-1/N, SerialTimeDays + 1/N, SerialTimeDays*N*Spaces + 2*Spaces + 1);
 f_SIAll = gampdf(x, Parameters(1), Parameters(2));
@@ -27,7 +27,7 @@ for i = 2:SameDayGenerations
 end
 
 %We calculate a matrix of SIs, the rows go down in number of generations,
-%where as the collumns are the number of days between infections.
+%whereas the columns are the number of days between infections.
 W = zeros(SameDayGenerations, SerialLength);
 
 for j = 1:SameDayGenerations

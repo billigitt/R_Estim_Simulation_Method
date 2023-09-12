@@ -1,26 +1,26 @@
 function I_data = Incidence_Generator(MainInput)
 
 %Function Description
-%This function takes a struct input with mutliple fields, namely: 
+%This function takes a struct input with multiple fields, namely: 
 %R_True: This is the assumed Rt values that the user inputs.
 %N_true: The 'true' partitioning over which the incidence is generated.
 %This is a subjective. Typically, the larger the more accurate the
 %incidence generation.
 %I_1: The assumed first value for the incidence
 %SerialParameters: A 2 by 1 vector containing the shape and scale
-%parameterisation for a Gamma distribution which descries the serial
+%parameterisation for a Gamma distribution which describes the serial
 %interval.
 %SerialTimeDays: The length of time over which the serial interval is
 %defined. Typically, it is best to make this value large so that the serial
 %probabilities are guaranteed to sum to 1. Although the user should check
-%with the Serial Parameterisatyion first.
+%with the Serial Parameterisation first.
 %Spaces: The discretisation over which the integration is performed. The
 %higher this number, the more accurate the serial interval, and therefore
 %the incidence generated
 
 
 % The output of the function is a random vector of incidence but one that
-% alligns with the inputs provided. The lnegth of the vector will be
+% aligns with the inputs provided. The length of the vector will be
 % length(MainInput.R_True) + 1.
 
 %Un-packing

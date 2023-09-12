@@ -5,7 +5,7 @@ close all
 %% Script Description
 
 %This script compares the EM method with our method, i.e. both methods try to resolve the issue of same time-window infections.
-%The EM inference was performed in R and then loaded into this script, enabling comaprison of the two methods on both Wales data-
+%The EM inference was performed in R and then loaded into this script, enabling comparison of the two methods on both Wales data-
 %sets used in the main manuscript.
 
 set(0,'DefaultFigureWindowStyle','normal')
@@ -149,7 +149,7 @@ hold on;
     hold off;
 xticks([0 tvals])
 
- set(gcf,'Position',[100 100 1000 750])
+set(gcf,'Position',[100 100 1000 750])
 set(gcf, 'color', 'none') ;
 xlim([-0.5 13.5])
 ylim([0.5 1.7])

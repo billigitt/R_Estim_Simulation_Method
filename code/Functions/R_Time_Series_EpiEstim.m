@@ -22,12 +22,10 @@ tau = InputStruct.tau;
 
 
 %This (as shown in the diagram) implies that the length of the sequence of
-%CIs and Means is (t-tau), Epi-Estim doesnt use the first one for some
-%reason.
+%CIs and Means is (t-tau), Epi-Estim does not use the first entry.
 
 t = length(I);
 disp(t)
-% StartPt = StartingPtFinder(t, W, 0.75, tau);
 
 Means = zeros(1, t);
 CIs = zeros(2, t);

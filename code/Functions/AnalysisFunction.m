@@ -7,8 +7,10 @@ function [w_Sim, w_EE, Means, EEMeans, Disag, CIs, EECIs, PlotterInputs] = Analy
 %functions in this file (SimulationInferenceSLURM) and others such as
 %EpiEstimStandardInference.m (in Functions Folder), we take the input
 %parameters in MainInput, as well as the N_Sim (value which is actually the
-%P value in the manuscript and named to indicate it is the NUMber of partitions for the Simulation approach) we output a vector of outputs:
-
+%P value in the manuscript and named to indicate it is the Number of partitions for the Simulation approach)
+% 
+% We output a vector of outputs:
+%
 %w_Sim: The serial interval used for the simulation approach
 %w_EE: The serial interval for the Cori et al. approach
 %Means: The vector of Mean Rt inference outputs (simulation based approach)
