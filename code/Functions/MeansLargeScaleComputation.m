@@ -67,7 +67,7 @@ parfor i = 1:NumExperiments
     InferenceInput.SimulationComputation = 'On';
     InferenceInput.NoParallelToolBox = 1;
     
-    Means = zeros(length(I_data_Matrix(i,:))-1, length(VectorofNs)); %Not sure this matrix has right size... what should dimension 1 be?
+    Means = zeros(length(I_data_Matrix(i,:))-1, length(VectorofNs));
     
     
     for j = 1:length(VectorofNs)

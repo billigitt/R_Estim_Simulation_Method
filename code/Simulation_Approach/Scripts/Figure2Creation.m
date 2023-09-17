@@ -1,4 +1,4 @@
-% clear; clc; close all
+clear; clc; close all
 set(0,'DefaultFigureWindowStyle','normal')
 set(0,'DefaultTextInterpreter', 'none')
 set(0,'defaultAxesTickLabelInterpreter','none');

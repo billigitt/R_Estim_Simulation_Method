@@ -5,7 +5,7 @@ function [Mean, Variance, Upper, Lower, Shape, Scale] = R_Infer_EpiEstim(I_02t, 
 %prior distribution. Again, there is potential to update this on each loop,
 %outside of this function (we permit the updated a and b paramters to be 
 %ouputs of the function). Tau is the time-window over which the likelihood
-%is taken. i is the step in the algorithm.
+%is taken.
 
 Shape = sum(I_02t(end-tau+1:end)) + Par(1);
 Scale = 0;

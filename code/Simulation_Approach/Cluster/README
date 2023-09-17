@@ -1,6 +1,6 @@
 This file gives a brief description of the other files in this folder.
 
-The "run_meansX.m" files pair with the "runX.sh" files and together and represent Rt inference for 100 simulations with the same parameterisation. The X will be something like "1and6", indicating that the values of P chosen are 1 and 6, and in this case there are 100 simulations, but the inference is repeated twice with P=1 and P=6. The numbers are paired together so that the computation time is roughly equal for each experiment. P=7 is the most expensive and so is not combined with another partitioning value.
+The "run_meansX.m" files pair with the "runX.sh" files and together represent Rt inference for 100 simulations with the same parameterisation. For example, the file names containing "1and6" indicate that the values of P chosen are 1 and 6, and in this case there are 100 simulations, but the inference is repeated twice with P=1 and P=6. The numbers are paired together so that the computation time is roughly equal for each experiment. P=7 is the most computationally expensive and so is not combined with another partitioning value.
 
 The remaining files refer to the 'big calculations' in the real world data. Namely, these files are used to calculate the inference for a very large values of P, namely P = 168. This is equivalent to an hourly partitioning, although the data is generated on an even finer resolution, namely every 10 minutes.
 

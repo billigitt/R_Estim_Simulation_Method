@@ -71,7 +71,7 @@ parfor i = 1:NumExperiments
     InferenceInput.SimulationComputation = 'On';
     InferenceInput.NoParallelToolBox = 1;
     
-    Means = zeros(length(I_data_Matrix(i,:))-1, length(VectorofNs)); %Not sure this matrix has right size... what should dimension 1 be?
+    Means = zeros(length(I_data_Matrix(i,:))-1, length(VectorofNs));
         
         [~,  ~, Means(:, 1), ~, I_disag_1(:, :, i), CIs_1(:, :, i), ~, ~] = AnalysisFunction(InferenceInput, VectorofNs(1));
         [~,  ~, Means(:, 2), ~, I_disag_2(:, :, i), CIs_2(:, :, i), ~, ~] = AnalysisFunction(InferenceInput, VectorofNs(2));

@@ -56,7 +56,7 @@ IncidenceInput = struct('R_True', [R_0*ones(1, 5) 0.75*ones(1, 5)], 'I_1', 1, 'N
 
 I_data = Simulations.I_data_Matrix(ChosenIdx, :);
 %%
-%Redo inference with this chosen comaparison
+%Redo inference with this chosen comparison
 NumberofPs = [1 2 3 4 5 6 7];
 
 InferenceInput = struct('RPosteriorLims', [0 20], 'MatchingPairsPerCore', 125, 'PriorR', ...
@@ -72,7 +72,7 @@ InferenceInput.ComparisonsNew = 'Off';
 InferenceInput.SimulationComputation = 'On';
 
 w_Sim = cell(length(NumberofPs), 1);
-Means = zeros(length(I_data)-1, length(NumberofPs)); %Not sure this matrix has right size... what should dimension 1 be?
+Means = zeros(length(I_data)-1, length(NumberofPs));
 Disag = w_Sim;
 
 PlotterStructs = cell(1, 2);
