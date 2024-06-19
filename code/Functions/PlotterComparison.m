@@ -42,7 +42,7 @@ length1 = length(Means1);
 length2 = length(Means2);
 lengthR = length(R);
 
-InferenceStruct2.Name = 'Cori ($P=1$)';
+InferenceStruct2.Name = 'Cori';
 
 if isequal(ProbabilityDensity, 'On')
     
@@ -80,7 +80,7 @@ if isequal(IncidenceAndTrueR, 'On')
         ax.YAxis(1).Color = ColourMat(1, :);
         ax.YAxis(2).Color = 'k';
         
-        legend(h(1), 'True $R_t$', 'interpreter', 'latex')
+        legend(h(1), 'True $R_t$', 'interpreter', 'latex', 'Location', 'NorthWest')
         ylim([YLim(1) YLim(2)])
         
     end

@@ -116,7 +116,8 @@ hold on;
     hold off;
 xticks([0 tvals])
 xlim([-0.5 13.5])
-ylim([0.5 1.7])
+ylim([0.4 1.8])
+yticks([0.4 0.6 0.8 1 1.2 1.4 1.6])
 box off
     
 %% Plot D: EM method 22-23 
@@ -152,6 +153,7 @@ xticks([0 tvals])
 set(gcf,'Position',[100 100 1000 750])
 set(gcf, 'color', 'none') ;
 xlim([-0.5 13.5])
-ylim([0.5 1.7])
+ylim([0.4 1.8])
+yticks([0.4 0.6 0.8 1 1.2 1.4 1.6])
 
 box off

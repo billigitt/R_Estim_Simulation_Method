@@ -62,7 +62,7 @@ end
 
 PlotterStructs{1}.IncidenceAndTrueR = 'On';
 PlotterComparison(PlotterStructs{1});
-set(gcf, 'color', 'none') ;
+%set(gcf, 'color', 'none') ;
 box off
 
 if isequal(FigureGeneration, 'Subplots')
@@ -92,23 +92,25 @@ elseif isequal(FigureGeneration, 'Figures')
 end
 
 OverkillMeans = load('../Cluster/MatFiles/Wales_2022-23_BigCalcFinal.mat');
-
+Means1 = PlotterStructs{1}.SimulationOutputStruct.Means;
 Means5 = PlotterStructs{7}.SimulationOutputStruct.Means;
 R_True = OverkillMeans.PlotterStructs.SimulationOutputStruct.Means;
 
-bar(2:1+length(R_True), 100*(Means5-R_True)./R_True, 'FaceColor', ColourMat(2, :), 'BarWidth', 1)
+h(1) = bar(2:1+length(R_True), 100*(Means1-R_True)./R_True, 'FaceColor', ColourMat(1, :), 'BarWidth', 1);
+hold on
+h(2) = bar(2:1+length(R_True), 100*(Means5-R_True)./R_True, 'FaceColor', ColourMat(2, :), 'BarWidth', 0.75);
 % 
 set(gcf,'Position',[100 100 1200 400])
-set(gcf, 'color', 'none') ;
+%set(gcf, 'color', 'none') ;
 ylabel('Relative Error (%)')
 xlabel('Time ($t$ weeks)', 'interpreter', 'latex')
-
+legend(h([1 2]), 'Cori', '$P=7$', 'interpreter', 'latex', 'Location', 'NorthEast')
 box off
 
 set(gcf,'Position',[100 100 1000 400])
-set(gcf, 'color', 'none') ;
+%set(gcf, 'color', 'none') ;
 xlim([0.5 1.5+length(R_True)])
-ylim([-1.3 2])
+% ylim([-1.3 2])
 
 figure
 
@@ -139,7 +141,7 @@ for i = [1 3 5]
     
     PlotterComparison(PlotterStructs{i});
     ylim([0 2.3])
-    set(gcf, 'color', 'none') ;
+    %set(gcf, 'color', 'none') ;
 end
 
 
@@ -154,6 +156,8 @@ elseif isequal(FigureGeneration, 'Figures')
 end
 
 bar(sym(100*sum(abs(MeansAll - R_True)./R_True, 2)'/length(R_True)), 'BarWidth', 0.4, 'FaceColor', ColourMat(2, :))
+hold on
+
 xlabel('$P$', 'interpreter', 'latex')
 ylabel("Average weekly error (%)")
 xlim([0.5 7.5])
@@ -162,4 +166,4 @@ ylim([0 28])
 box off
 
 set(gcf,'Position',[100 100 1000 750])
-set(gcf, 'color', 'none') ;
+%set(gcf, 'color', 'none') ;
